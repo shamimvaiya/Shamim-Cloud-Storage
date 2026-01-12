@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShamimCloud | Access Portal</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ShamimCloud - Secure Access">
+    <meta property="og:description" content="Establishing secure connection to the main server. Please wait...">
+    <meta property="og:image" content="https://shamimcloud.vercel.app/preview.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://shamimcloud.vercel.app/preview.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#020204',
+                            dark: '#0a0b1e',
+                            primary: '#6d28d9', // Purple
+                            secondary: '#0ea5e9', // Blue
+                            accent: '#00ff9d', // Neon Green
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Rajdhani', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 15s linear infinite',
+                        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+                        'scan': 'scan 4s linear infinite',
+                    },
+                    keyframes: {
+                        scan: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Advanced Custom CSS */
+        body {
+            background-color: #020204;
+            color: white;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        /* Particle Canvas Background */
+        #canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        /* Cyberpunk Grid Floor */
+        .cyber-grid {
+            position: absolute;
+            bottom: -30%;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(109, 40, 217, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.3) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            z-index: 0;
+            mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, transparent 60%);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(40px);
+            }
+        }
+
+        /* Glassmorphism Panel */
+        .glass-panel {
+            background: rgba(10, 11, 30, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(109, 40, 217, 0.2), inset 0 0 20px rgba(109, 40, 217, 0.1);
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            position: relative;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #020204;
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 #00ff9d;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #ff00c1;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% {
+                clip: rect(10px, 9999px, 30px, 0);
+            }
+
+            20% {
+                clip: rect(80px, 9999px, 100px, 0);
+            }
+
+            40% {
+                clip: rect(10px, 9999px, 50px, 0);
+            }
+
+            60% {
+                clip: rect(60px, 9999px, 80px, 0);
+            }
+
+            80% {
+                clip: rect(20px, 9999px, 60px, 0);
+            }
+
+            100% {
+                clip: rect(70px, 9999px, 90px, 0);
+            }
+        }
+
+        /* CRT Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.3;
+        }
+
+        /* Glowing Button */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .btn-glow:hover {
+            box-shadow: 0 0 30px #7c3aed, 0 0 60px #2563eb;
+            letter-spacing: 2px;
+        }
+
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 60%);
+            transform: scale(0);
+            transition: transform 0.6s ease-out;
+        }
+
+        .btn-glow:hover::after {
+            transform: scale(1);
+        }
+
+        /* Terminal Window */
+        .terminal-window {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: #00ff9d;
+            text-shadow: 0 0 5px #00ff9d;
+        }
+    </style>
+</head>
+
+<body class="h-screen w-screen flex items-center justify-center relative">
+
+    <canvas id="canvas-bg"></canvas>
+    <div class="cyber-grid"></div>
+    <div class="scanlines"></div>
+
+    <div class="absolute top-8 left-8 text-cyber-secondary font-mono text-xs opacity-70 hidden md:block">
+        <div>SYS.ID: SC-884X</div>
+        <div>LOC: SERVER_NODE_01</div>
+        <div>ENCRYPTION: AES-256</div>
+    </div>
+    <div class="absolute bottom-8 right-8 text-cyber-accent font-mono text-xs opacity-70 hidden md:block">
+        <div class="flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+            STATUS: OPERATIONAL
+        </div>
+    </div>
+
+    <main class="relative z-10 w-full max-w-3xl px-6">
+        <div class="glass-panel rounded-2xl p-1 bg-gradient-to-b from-white/10 to-transparent">
+            <div class="bg-black/80 rounded-xl p-8 md:p-12 relative overflow-hidden border border-white/5">
+
+                <div
+                    class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 animate-scan">
+                </div>
+
+                <div class="text-center mb-10">
+                    <div class="inline-block relative mb-6">
+                        <div class="absolute inset-0 bg-purple-600 blur-2xl opacity-40 animate-pulse"></div>
+                        <i
+                            class="fa-solid fa-server text-6xl text-transparent bg-clip-text bg-gradient-to-br from-white to-cyber-secondary relative z-10"></i>
+                    </div>
+
+                    <h1 class="text-5xl md:text-7xl font-bold uppercase tracking-widest mb-2 glitch-text"
+                        data-text="SHAMIMCLOUD">
+                        SHAMIMCLOUD
+                    </h1>
+                    <div
+                        class="h-px w-32 bg-gradient-to-r from-transparent via-cyber-primary to-transparent mx-auto mb-4">
+                    </div>
+                    <p id="typing-text" class="text-cyan-400 font-mono text-lg tracking-wider h-6"></p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                    <div
+                        class="border border-white/10 bg-white/5 p-4 rounded text-center hover:bg-white/10 transition duration-300">
+                        <i class="fa-solid fa-rocket text-purple-400 mb-2"></i>
+                        <h3 class="font-bold text-sm">TURBO SPEED</h3>
+                        <p class="text-xs text-gray-500 mt-1">Global Edge Network</p>
+                    </div>
+                    <div
+                        class="border border-white/10 bg-white/5 p-4 rounded text-center hover:bg-white/10 transition duration-300">
+                        <i class="fa-solid fa-shield-cat text-cyan-400 mb-2"></i>
+                        <h3 class="font-bold text-sm">SECURE CORE</h3>
+                        <p class="text-xs text-gray-500 mt-1">DDoS Protection</p>
+                    </div>
+                    <div
+                        class="border border-white/10 bg-white/5 p-4 rounded text-center hover:bg-white/10 transition duration-300">
+                        <i class="fa-brands fa-github text-white mb-2"></i>
+                        <h3 class="font-bold text-sm">GIT SYNC</h3>
+                        <p class="text-xs text-gray-500 mt-1">Auto Deployment</p>
+                    </div>
+                </div>
+
+                <div
+                    class="terminal-window bg-black/90 p-4 rounded border border-green-900/50 mb-8 h-24 overflow-hidden text-left shadow-inner">
+                    <div id="terminal-logs">
+                        > Initializing handshake protocol...<br>
+                        > Verifying user credentials... OK<br>
+                        > Establishing secure tunnel to Vercel...<br>
+                    </div>
+                    <div class="animate-pulse inline-block w-2 h-4 bg-green-500 align-middle ml-1"></div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="accessMainframe()"
+                        class="btn-glow group relative inline-flex items-center justify-center px-10 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg text-white font-bold tracking-widest uppercase text-sm border border-white/20">
+                        <span class="mr-3 group-hover:animate-spin"><i class="fa-solid fa-gear"></i></span>
+                        Access Platform
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="transition-overlay"
+        class="fixed inset-0 bg-black z-[100] pointer-events-none opacity-0 flex items-center justify-center transition-opacity duration-700">
+        <div class="text-center">
+            <div class="w-24 h-24 border-t-4 border-b-4 border-cyan-500 rounded-full animate-spin mb-4 mx-auto"></div>
+            <div class="text-cyan-400 font-mono tracking-widest text-xl blink">CONNECTING...</div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Typing Effect for Subtitle
+        const text = "NEXT GEN HOSTING INFRASTRUCTURE";
+        let index = 0;
+        const typeWriter = () => {
+            if (index < text.length) {
+                document.getElementById("typing-text").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        setTimeout(typeWriter, 1000);
+
+        // 2. Terminal Logs Animation
+        const logs = [
+            "> Optimization engine: ACTIVE",
+            "> Latency check: 12ms (Excellent)",
+            "> Encryption key: GENERATED",
+            "> Waiting for user authorization..."
+        ];
+        let logIndex = 0;
+        const addLog = () => {
+            if (logIndex < logs.length) {
+                const logContainer = document.getElementById("terminal-logs");
+                logContainer.innerHTML += logs[logIndex] + "<br>";
+                logContainer.scrollTop = logContainer.scrollHeight;
+                logIndex++;
+                setTimeout(addLog, 800);
+            }
+        };
+        setTimeout(addLog, 2000);
+
+        // 3. Redirect Logic
+        function accessMainframe() {
+            const overlay = document.getElementById('transition-overlay');
+            overlay.classList.remove('opacity-0');
+            overlay.classList.add('opacity-100');
+
+            // Redirect after brief "Connecting" animation
+            setTimeout(() => {
+                // CHANGE THIS URL TO YOUR MAIN VERCEL SITE
+                window.location.href = "https://shamimcloud.vercel.app";
+            }, 1500);
+        }
+
+        // 4. CANVAS PARTICLE SYSTEM (The Visual Magic)
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const particleCount = 100;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = Math.random() > 0.5 ? '#7c3aed' : '#0ea5e9'; // Purple or Blue
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                // Draw connections
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance / 1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            initParticles();
+        });
+    </script>
+</body>
+
+</html>
