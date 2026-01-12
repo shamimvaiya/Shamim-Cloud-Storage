@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1768259411454,
+    "username": "shamimvaiya",
+    "email": "shamimvaiya@gmail.com",
+    "password": "U2FsdGVkX1+l1xspHg58vyGhJjSC/x3+swBnoc3rcwU=",
+    "role": "admin",
+    "plan": "vip",
+    "expiryDate": null
+  }
+]
