@@ -1,0 +1,20 @@
+{
+  "free": {
+    "price": 0,
+    "duration": 365,
+    "storage": 50,
+    "max_projects": 2
+  },
+  "pro": {
+    "price": 85,
+    "duration": 15,
+    "storage": 200,
+    "max_projects": 10
+  },
+  "vip": {
+    "price": 200,
+    "duration": 30,
+    "storage": 512,
+    "max_projects": -1
+  }
+}
