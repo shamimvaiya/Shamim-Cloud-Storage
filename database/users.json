@@ -1,5 +1,14 @@
 [
   {
+    "id": "10000000001",
+    "username": "shamim", 
+    "email": "shamim@gmail.com",
+    "password": "shamim",
+    "plan": "vip",
+    "role": "admin",
+    "expiryDate": null
+},
+  {
     "id": 1768255522272,
     "username": "shamimvaiya",
     "email": "shamimvaiya@gmail.com",
