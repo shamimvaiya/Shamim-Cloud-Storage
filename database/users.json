@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1768902215591,
+    "username": "shamim",
+    "email": "shamim@gmail.com",
+    "password": "U2FsdGVkX1/Sc8sEvoMFrsrwiqLiNHntsn/Ysc9m5Ow=",
+    "plan": "free",
+    "role": "user",
+    "expiryDate": null
+  }
+]
