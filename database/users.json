@@ -1,4 +1,13 @@
 [
+    {
+    "id": 1234567891011,
+    "username": "shamim",
+    "email": "shamim@gmail.com",
+    "password": "U2FsdGVkX18ERzGSXqE+5F1UCGFg89puMz+90iXFLMA=",
+    "plan": "vip",
+    "role": "admin",
+    "expiryDate": null
+  },
   {
     "id": 1768899301667,
     "username": "shamimvaiya",
