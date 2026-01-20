@@ -15,6 +15,8 @@
     "password": "U2FsdGVkX1+ayLrHaVt4PK3Sv1wnW3K/cR0E3Rmd4CM=",
     "plan": "free",
     "role": "user",
-    "expiryDate": null
+    "expiryDate": null,
+    "trialLastReset": 1768905782751,
+    "trialSecondsRemaining": 3600
   }
 ]
