@@ -17,6 +17,10 @@
     "role": "user",
     "expiryDate": "2026-02-19",
     "trialLastReset": 1768905782751,
-    "trialSecondsRemaining": 3600
+    "trialSecondsRemaining": 3600,
+    "editorUsage": {
+      "date": "2026-01-20",
+      "minutesUsed": 0
+    }
   }
 ]
