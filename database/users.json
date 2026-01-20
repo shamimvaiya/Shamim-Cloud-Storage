@@ -7,14 +7,5 @@
     "plan": "vip",
     "role": "admin",
     "expiryDate": null
-  },
-  {
-    "id": 1768900906858,
-    "username": "shamimvaiya",
-    "email": "shamimvaiya@gmail.com",
-    "password": "U2FsdGVkX1+92yk7uDlqbWwYGlwde0VF7wdOn9Qcyvs=",
-    "plan": "free",
-    "role": "user",
-    "expiryDate": null
   }
 ]
