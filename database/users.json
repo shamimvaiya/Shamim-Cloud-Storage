@@ -13,9 +13,9 @@
     "username": "shamimvaiya",
     "email": "shamimvaiya@gmail.com",
     "password": "U2FsdGVkX1+ayLrHaVt4PK3Sv1wnW3K/cR0E3Rmd4CM=",
-    "plan": "free",
+    "plan": "pro",
     "role": "user",
-    "expiryDate": null,
+    "expiryDate": "2026-02-19",
     "trialLastReset": 1768905782751,
     "trialSecondsRemaining": 3600
   }
